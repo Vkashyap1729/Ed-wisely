@@ -9,7 +9,12 @@ const FixedComponet = () => {
       <Grid item xs={0.7}>
         <Navbar />
       </Grid>
-      <Grid item xs={11.3} marginTop={2}>
+      <Grid
+        item
+        xs={11.3}
+        borderRadius={'0 25px 25px 0'}
+        // border={'2px solid black'}
+      >
         <MainHeader />
         <DashBordCards />
       </Grid>

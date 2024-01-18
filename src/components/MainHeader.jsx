@@ -16,6 +16,7 @@ const MainHeader = () => {
       direction="row"
       justifyContent={'space-between'}
       alignItems={'center'}
+      marginTop={2}
     >
       <Typography style={styles} marginLeft={2}>
         Good morning, {name} <span>👋</span>
