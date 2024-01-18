@@ -10,7 +10,7 @@ const DashBordCards = () => {
   }
   return (
     <div>
-      <Typography style={styles} marginLeft={2}>
+      <Typography style={styles} marginLeft={2} marginTop={1}>
         Dashboard
       </Typography>
     </div>
