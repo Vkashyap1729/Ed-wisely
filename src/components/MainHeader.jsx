@@ -12,17 +12,25 @@ const MainHeader = () => {
     lineHeight: '32px',
   }
   return (
-    <Stack
-      direction="row"
-      justifyContent={'space-between'}
-      alignItems={'center'}
-      marginTop={2}
+    <Box
+      width={'94vw'}
+      height={'80px'}
+      border={'2px solid black'}
+      position={'absolute'}
+      left={'6vw'}
     >
-      <Typography style={styles} marginLeft={2}>
-        Good morning, {name} <span>👋</span>
-      </Typography>
-      <MainHeaderImage />
-    </Stack>
+      <Stack
+        direction="row"
+        justifyContent={'space-between'}
+        alignItems={'center'}
+        marginTop={2}
+      >
+        <Typography style={styles} marginLeft={2}>
+          Good morning, {name} <span>👋</span>
+        </Typography>
+        <MainHeaderImage />
+      </Stack>
+    </Box>
   )
 }
 export default MainHeader
