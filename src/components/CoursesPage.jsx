@@ -11,14 +11,43 @@ import Arrow from '../assets/Arrow'
 import UnitsCard from './UnitsCard'
 import Units from './Units'
 import { useState } from 'react'
-import DropDown from '../assets/DropDown'
+import ProgressBar from './ProgressBar'
+import useFetchData from '../CustomHooks'
 const CoursesPage = () => {
-  const title = 'Machine Learning A-Z™: Hands-On Python & R In Data...'
-  const percentage = 76
+  const fetchDataFromApi = async () => {
+    try {
+      const response = await fetch(
+        'https://stagingstudentpython.edwisely.com/reactProject/courseData?course_id=2'
+      )
+      if (!response.ok) {
+        throw new Error('Failed to fetch data')
+      }
+      const data = await response.json()
+      return data
+    } catch (error) {
+      throw error
+    }
+  }
+  const { assessmentsData, error, isLoading, setAssessmentsData } =
+    useFetchData(fetchDataFromApi)
   const bgcolor = '#E7EEFE'
-  const chipname = 'design'
   const color = '#0B58F5'
+  const { data } = { ...assessmentsData }
+  const { name, tag, percentage, description, continue_reading, units } = {
+    ...data,
+  }
+  // console.log(assessmentsData)
+  console.log(continue_reading)
+  const contentArray = description
+    ? description.split('\n').filter((item) => item.trim() !== '')
+    : []
+  if (isLoading) {
+    return <p>Loading...</p>
+  }
 
+  if (error) {
+    return <p>Error: {error.message}</p>
+  }
   return (
     <Box>
       <Stack
@@ -27,6 +56,7 @@ const CoursesPage = () => {
           gap: '20px',
           marginLeft: '33.5px',
           marginTop: '34.29px',
+          alignItems: 'center',
         }}
       >
         <Arrow />
@@ -40,64 +70,41 @@ const CoursesPage = () => {
             letterSpacing: '-0.25px',
           }}
         >
-          {title}
+          {name}
         </Typography>
-        <Typography
+        <Box
           sx={{
-            color: color,
-            fontSize: '12px',
-            fontStyle: 'normal',
-            fontWeight: 500,
-            lineHeight: '12px',
-            textTransform: 'uppercase',
+            display: 'inline-flex',
+            padding: '4px 6px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '10px',
             backgroundColor: bgcolor,
           }}
         >
-          {chipname}
-        </Typography>
+          <Typography
+            sx={{
+              color: color,
+              fontSize: '14px',
+              fontStyle: 'normal',
+              fontWeight: 500,
+              lineHeight: '12px',
+              textTransform: 'uppercase',
+            }}
+          >
+            {tag}
+          </Typography>
+        </Box>
       </Stack>
+      <Box width={'330px'} margin={'10px 0 0  80px'}>
+        <ProgressBar value={percentage} />
+      </Box>
       <Box
         sx={{
           marginTop: '26px',
           marginLeft: '85px',
         }}
       >
-        <Stack
-          sx={{
-            flexDirection: 'row',
-            gap: '12px',
-          }}
-        >
-          <Box
-            sx={{
-              width: '213px',
-              height: '5px',
-              bgcolor: '#E7E7E7',
-              borderRadius: '10px',
-            }}
-          >
-            <Box
-              sx={{
-                width: percentage,
-                height: '5px',
-                bgcolor: '#0B58F5',
-                borderRadius: '10px',
-              }}
-            ></Box>
-          </Box>
-          <Typography
-            sx={{
-              color: '#0B58F5',
-              fontSize: '14px',
-              fontStyle: 'normal',
-              fontWeight: 400,
-              lineHeight: 'normal',
-            }}
-          >
-            Avg. {percentage}%
-          </Typography>
-        </Stack>
-
         <Box
           sx={{
             marginTop: '27px',
@@ -114,27 +121,36 @@ const CoursesPage = () => {
           >
             What you will learn
           </Typography>
+
           <Typography
             sx={{
               marginTop: ' 8px',
-              color: '#00000',
-              fontSize: '14px',
-              fontStyle: 'normal',
-              fontWeight: 300,
-              lineHeight: 'normal',
+              minWidth: '600px',
+              width: '100%',
+              maxWidth: '1095px',
             }}
           >
-            Understand how to solve the given standard partial differential
-            equations.\nSolve differential equations using Fourier series
-            analysis which plays a vital role in engineering
-            applications.\nAppreciate the physical significance of Fourier
-            series techniques in solving one and two dimensional heat flow
-            problems and one-dimensional wave equations.\nUnderstand the
-            mathematical principles on transforms and partial differential
-            equations would provide them the ability to formulate and solve some
-            of the physical problems of engineering.\nUse the effective
-            mathematical tools for the solutions of partial differential
-            equations by using Z transform techniques for discrete time systems.
+            {contentArray.map((item, index) => (
+              <div key={index}>
+                <Typography variant="body1" component="span">
+                  •
+                </Typography>
+                <Typography
+                  variant="body1"
+                  component="span"
+                  ml={1}
+                  sx={{
+                    color: '#00000',
+                    fontSize: '14px',
+                    fontStyle: 'normal',
+                    fontWeight: 300,
+                    lineHeight: 'normal',
+                  }}
+                >
+                  {item}
+                </Typography>
+              </div>
+            ))}
           </Typography>
         </Box>
       </Box>
@@ -152,10 +168,10 @@ const CoursesPage = () => {
         >
           Continue reading
         </Typography>
-        <Stack direction={'row'}>
-          <UnitsCard />
-          <UnitsCard />
-          <UnitsCard />
+        <Stack direction={'row'} spacing={'22px'}>
+          {continue_reading.map((item) => (
+            <UnitsCard name={item.name} url={item.url} />
+          ))}
         </Stack>
         <Box>
           <Box display={'flex'}>

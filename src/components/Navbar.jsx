@@ -6,16 +6,14 @@ import { Box, Stack } from '@mui/material'
 
 const Navbar = () => {
   return (
-    <Box position={'fixed'}>
+    <Box position="fixed">
       <Stack
         direction="column"
-        bgcolor={'#F4F6F8'}
-        width={'6vw'}
-        height={'100vh'}
-        alignItems={'center'}
+        bgcolor="#F4F6F8"
+        width="6vw"
+        height="100vh"
+        alignItems="center"
         spacing={4}
-        // borderRadius={'25px 0 0 25px'}
-        // border={'2px solid black'}
       >
         <Logo />
         <Dashbord />

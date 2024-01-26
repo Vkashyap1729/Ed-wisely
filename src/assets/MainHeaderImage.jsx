@@ -1,11 +1,11 @@
 import user from './user.png'
-const MainHeaderImage = () => {
+const MainHeaderImage = ({ url = user }) => {
   const styles = {
     width: '50px',
     height: '50px',
     flexShrink: 0,
     borderRadius: '24px',
-    background: `url(${user}), lightgray 50% / cover no-repeat, #C4C4C4`,
+    background: `url(${url}), lightgray 50% / cover no-repeat, #C4C4C4`,
     marginRight: '40px',
   }
 

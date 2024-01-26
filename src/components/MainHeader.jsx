@@ -1,9 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material'
 import MainHeaderImage from '../assets/MainHeaderImage'
-import { useState } from 'react'
 
-const MainHeader = () => {
-  const [name, setName] = useState('Maharram')
+const MainHeader = ({ name = 'Maharram' }) => {
   const styles = {
     color: 'var(--Basic-700, #2E3A59)',
     fontSize: '24px',
@@ -13,11 +11,17 @@ const MainHeader = () => {
   }
   return (
     <Box
-      width={'94vw'}
-      height={'80px'}
-      border={'2px solid black'}
-      position={'absolute'}
-      left={'6vw'}
+      sx={{
+        width: '94vw',
+        height: {
+          sm: '60px', // Height for small screens
+          md: '60px', // Height for medium screens
+          lg: '80px', // Height for large screens
+          xl: '80px',
+        },
+        position: 'absolute',
+        left: '6vw',
+      }}
     >
       <Stack
         direction="row"

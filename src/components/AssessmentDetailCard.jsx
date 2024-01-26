@@ -23,7 +23,7 @@ const AssessmentDetailCard = ({
         minHeight: '60px',
         minWidth: '100px',
         width: '100%',
-        maxWidth: '200px',
+        maxWidth: '230px',
         borderRadius: '10px',
         boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.1)',
         padding: '8px 8px 8px 8px',

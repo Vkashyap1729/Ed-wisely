@@ -1,7 +1,7 @@
-import { Avatar, Box, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Stack, Typography, Badge } from '@mui/material'
 import React from 'react'
 
-const LeaderRanking = ({ data, index, value }) => {
+const LeaderRanking = ({ data, index, value, rank, col, fontcol }) => {
   return (
     <Stack
       direction={'row'}
@@ -9,88 +9,64 @@ const LeaderRanking = ({ data, index, value }) => {
       justifyContent={'space-between'}
     >
       <Stack direction={'row'} alignItems={'center'} gap={'27px'}>
-        <Typography
-          component={'p'}
-          sx={{
-            fontFamily: 'Poppins-Medium',
-            fontSize: '14px',
-            color: (theme) => theme.palette.grey[900],
-          }}
-        >
-          {index}.
-        </Typography>
         <Stack direction={'row'} alignItems={'center'} gap={'16px'}>
           <Avatar
             alt="Avatar"
             sx={{ width: 30, height: 30 }}
             src={data.profile_pic}
           />
-          <Typography
-            component={'p'}
-            sx={{
-              fontFamily: 'Poppins-Medium',
-              fontSize: '14px',
-              color: (theme) => theme.palette.grey[900],
-            }}
-          >
-            {data.name}
-          </Typography>
+          <Stack>
+            <Typography
+              component={'p'}
+              sx={{
+                fontFamily: 'Poppins-Medium',
+                fontSize: '14px',
+                color: (theme) => theme.palette.grey[900],
+              }}
+            >
+              {data.name}
+            </Typography>
+            <Typography
+              component={'p'}
+              sx={{
+                fontFamily: 'Poppins-SemiBold',
+                fontSize: '14px',
+                color: (theme) => theme.palette.warning.main,
+              }}
+            >
+              {value}%
+            </Typography>
+          </Stack>
         </Stack>
       </Stack>
-      {/* ratings */}
-
       <Stack direction={'row'} alignItems={'center'} gap={'8px'}>
-        <Stack direction={'row'} alignItems={'center'} gap={0}>
-          <Box
-            sx={{
-              width: 20,
-              height: 20,
-              svg: {
-                path: {
-                  fill: (theme) => theme.palette.warning.main,
-                },
-              },
-            }}
-          ></Box>
-          <Box
-            sx={{
-              width: 20,
-              height: 20,
-              svg: {
-                path: {
-                  fill: (theme) =>
-                    value >= 80
-                      ? theme.palette.warning.main
-                      : theme.palette.warning[300],
-                },
-              },
-            }}
-          ></Box>
-          <Box
-            sx={{
-              width: 20,
-              height: 20,
-              svg: {
-                path: {
-                  fill: (theme) =>
-                    value >= 90 && value <= 100
-                      ? theme.palette.warning.main
-                      : theme.palette.warning[300],
-                },
-              },
-            }}
-          ></Box>
-        </Stack>
-        <Typography
-          component={'p'}
+        <Box
           sx={{
-            fontFamily: 'Poppins-SemiBold',
-            fontSize: '14px',
-            color: (theme) => theme.palette.warning.main,
+            width: '26px',
+            height: '26px',
+            bgcolor: col,
+            borderRadius: '13px',
+            flexShrink: 0,
+            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          {value}%
-        </Typography>
+          <Typography
+            sx={{
+              fontSize: 12,
+              fontStyle: 'normal',
+              fontWeight: 500,
+              lineHeight: 'normal',
+              color: fontcol,
+              textAlign: 'start', // Assuming you want to start-aligned text
+              textRendering: 'optimizeLegibility', // For better text rendering
+            }}
+          >
+            {rank}
+          </Typography>
+        </Box>
       </Stack>
     </Stack>
   )

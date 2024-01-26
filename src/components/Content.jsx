@@ -9,7 +9,7 @@ const Content = () => {
       top={'80px'}
       left={'6vw'}
       width={'94vw'}
-      border={'2px solid black'}
+      // border={'2px solid black'}
       position={'absolute'}
     >
       <Dashbord />

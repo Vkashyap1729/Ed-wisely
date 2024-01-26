@@ -1,7 +1,9 @@
-import React from 'react'
+import { useState } from 'react'
+
 import CustomCard from './CustomCard'
-import { Skeleton, Stack, Typography } from '@mui/material'
+import { Skeleton, Stack, Typography, Drawer, IconButton } from '@mui/material'
 import LeaderRanking from './LeaderRanking'
+import LeaderBordButton from '../assets/LeaderBordButton'
 
 const LeaderBoardCard = ({ width = '100%', height = '100%' }) => {
   // console.log(data, '--> LeaderBoardCard')
@@ -103,37 +105,83 @@ const LeaderBoardCard = ({ width = '100%', height = '100%' }) => {
       rank: 11,
     },
   ]
+  const sortedData = data.sort((a, b) => b.percentage - a.percentage)
+  const rankedData = sortedData.map((data, index) => ({
+    ...data,
+    rank: index + 1,
+  }))
+  const [open, setOpen] = useState(false)
+
+  const handleToggleDrawer = () => {
+    setOpen(!open)
+  }
+  const loggedInUserId = 1234
+  const userIndex = rankedData.findIndex((item) => item.id === loggedInUserId)
+
+  if (userIndex !== -1) {
+    const user = rankedData.splice(userIndex, 1)[0]
+    rankedData.unshift(user)
+  }
   return (
-    <CustomCard width={width} height={height}>
-      <Stack gap={'16px'}>
-        <Stack direction={'row'} alignItems={'center'} gap={'8px'}>
-          <Typography
-            component={'p'}
-            sx={{
-              fontFamily: 'Poppins-SemiBold',
-              fontSize: '16px',
-              color: 'grey.900',
-            }}
-          >
-            Leader Board
-          </Typography>
-        </Stack>
-        {data ? (
-          <Stack gap={'22px'}>
-            {data?.map((item, index) => (
-              <LeaderRanking
-                key={index + 1}
-                data={item}
-                value={item.percentage}
-                index={index + 1}
-              />
-            ))}
-          </Stack>
-        ) : (
-          <LeaderPlaceHolder />
-        )}
+    <>
+      <Stack
+        direction={'row'}
+        justifyContent={'space-between'}
+        sx={{ alignItems: 'center' }}
+      >
+        <Typography
+          variant="h6"
+          sx={{
+            color: 'var(--Basic-700, #2E3A59)',
+            fontSize: '20px',
+            fontStyle: 'normal',
+            fontWeight: 500,
+            lineHeight: '28px',
+          }}
+        >
+          Leaderboard
+        </Typography>
+        <IconButton onClick={handleToggleDrawer} alignItems="center">
+          <LeaderBordButton />
+        </IconButton>
       </Stack>
-    </CustomCard>
+      <Stack gap={'22px'}>
+        {rankedData.slice(0, 6).map((item, index) => (
+          <LeaderRanking
+            key={index + 1}
+            data={item}
+            value={item.percentage}
+            index={index + 1}
+            rank={item.rank}
+            col={item.rank < 4 ? '#EDFAEE ' : '#E7EEFE'}
+            fontcol={item.rank < 4 ? '#40A846 ' : '#0B58F5'}
+          />
+        ))}
+      </Stack>
+      <Drawer anchor="right" open={open} onClose={handleToggleDrawer}>
+        <CustomCard width={width} height={height}>
+          <Stack gap={'16px'}>
+            {rankedData ? (
+              <Stack gap={'22px'}>
+                {rankedData?.map((item, index) => (
+                  <LeaderRanking
+                    key={index + 1}
+                    data={item}
+                    value={item.percentage}
+                    index={index + 1}
+                    rank={item.rank}
+                    col={item.rank < 4 ? '#EDFAEE ' : '#E7EEFE'}
+                    fontcol={item.rank < 4 ? '#40A846 ' : '#0B58F5'}
+                  />
+                ))}
+              </Stack>
+            ) : (
+              <LeaderPlaceHolder />
+            )}
+          </Stack>
+        </CustomCard>
+      </Drawer>
+    </>
   )
 }
 
