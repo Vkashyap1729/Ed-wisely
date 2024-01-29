@@ -1,20 +1,18 @@
-import MuiColumnChart from './components/MuiColumnChart'
-import DashBordCards from './components/DashBordCards'
-import LeaderBoardCard from './components/LeaderBoardCard'
-import Navbar from './components/Navbar'
-import MainHeader from './components/MainHeader'
-import Content from './components/Content'
-import { Box } from '@mui/material'
-import CourseCards from './components/CourseCards'
-import useFetchData from './CustomHooks'
-import { useEffect } from 'react'
+import Login from './Login'
+import Dashbord from './components/Dashbord'
+import CoursesPage from './components/CoursesPage'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import PdfViewer from './components/PdfViewer'
 const App = () => {
   return (
-    <div>
-      <Navbar />
-      <MainHeader />
-      <Content />
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<Login />}></Route>
+        <Route exact path="/dashbord" element={<Dashbord />}></Route>
+        <Route exact path="/course/:id" element={<CoursesPage />}></Route>
+        <Route exact path="/pdfview/:url" element={<PdfViewer />}></Route>
+      </Routes>
+    </Router>
   )
 }
 export default App

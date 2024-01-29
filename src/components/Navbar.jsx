@@ -2,25 +2,40 @@ import Dashbord from '../assets/Dashbord'
 import Logo from '../assets/Logo'
 import Book from '../assets/Book'
 import Logout from '../assets/Logout'
-import { Box, Stack } from '@mui/material'
-
+import { Button, Stack } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { logout } from './authSlice'
+import { useNavigate } from 'react-router-dom'
 const Navbar = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const handleLogout = () => {
+    dispatch(logout())
+    navigate('/')
+  }
   return (
-    <Box position="fixed">
-      <Stack
-        direction="column"
-        bgcolor="#F4F6F8"
-        width="6vw"
-        height="100vh"
-        alignItems="center"
-        spacing={4}
-      >
+    <Stack
+      direction={'column'}
+      justifyContent={'space-between'}
+      bgcolor="#F4F6F8"
+      height="100vh"
+      width={'100%'}
+      alignItems="center"
+    >
+      <Stack direction="column" alignItems="center" spacing={4}>
         <Logo />
         <Dashbord />
         <Book />
-        <Logout />
       </Stack>
-    </Box>
+      <Button
+        onClick={handleLogout}
+        sx={{
+          marginBottom: '16px',
+        }}
+      >
+        <Logout />
+      </Button>
+    </Stack>
   )
 }
 export default Navbar

@@ -1,14 +1,17 @@
 import { Box, Typography } from '@mui/material'
-import { AspectRatio } from '@mui/icons-material'
-const CourseCards = ({
-  chipname = 'design',
-  name = 'Machine Learning A-Z™: Hands-On Python & R In Data..',
-  color = '#0B58F5',
-  bgcolor = '#E7EEFE',
-  imgUrl = 'https://testings-purpose.s3.ap-south-1.amazonaws.com/media/course+images/Course+Images+4.jpg',
-}) => {
+const CourseCards = ({ chipname, name, color, bgcolor, imgUrl }) => {
   return (
-    <Box sx={{ maxWidth: '244px', width: '100%', minWidth: '100px' }}>
+    <Box
+      sx={{
+        maxWidth: '244px',
+        width: '100%',
+        minWidth: '100px',
+        borderRadius: '10px',
+        border: '1px solid #F4F6F8',
+        background: '#FFF',
+        boxShadow: '10px 10px 32px 0px rgba(22, 22, 22, 0.04)',
+      }}
+    >
       <Box
         sx={{
           borderRadius: '10px 10px 0px 0px',

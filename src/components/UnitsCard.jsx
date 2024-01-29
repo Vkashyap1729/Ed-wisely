@@ -1,10 +1,11 @@
 import { Box, Stack, Typography } from '@mui/material'
 import ArrowInCard from '../assets/ArrowInCard'
 import OneCourses from '../assets/OneCourses'
+import { Link } from 'react-router-dom'
 const UnitsCard = (props) => {
   const { name, url } = { ...props }
   return (
-    <a href={url}>
+    <Link to={`/pdfview/${encodeURIComponent(url)}`}>
       <Box
         sx={{
           display: 'flex',
@@ -55,7 +56,7 @@ const UnitsCard = (props) => {
           <ArrowInCard />
         </Box>
       </Box>
-    </a>
+    </Link>
   )
 }
 export default UnitsCard

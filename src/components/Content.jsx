@@ -5,14 +5,8 @@ import CoursesPage from './CoursesPage'
 
 const Content = () => {
   return (
-    <Box
-      top={'80px'}
-      left={'6vw'}
-      width={'94vw'}
-      // border={'2px solid black'}
-      position={'absolute'}
-    >
-      <Dashbord />
+    <Box top={'80px'} left={'6vw'} width={'94vw'} position={'absolute'}>
+      {/* <Dashbord /> */}
       {/* <CoursesPage /> */}
     </Box>
   )

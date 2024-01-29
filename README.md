@@ -68,3 +68,40 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+// SomeComponent.js
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, logout } from './authSlice'; // Adjust the path accordingly
+
+const SomeComponent = () => {
+const dispatch = useDispatch();
+const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+const handleLogin = () => {
+dispatch(login());
+};
+
+const handleLogout = () => {
+dispatch(logout());
+};
+
+return (
+
+<div>
+{isLoggedIn ? (
+<div>
+<p>Welcome! You are logged in.</p>
+<button onClick={handleLogout}>Logout</button>
+</div>
+) : (
+<div>
+<p>You are not logged in.</p>
+<button onClick={handleLogin}>Login</button>
+</div>
+)}
+</div>
+);
+};
+
+export default SomeComponent;

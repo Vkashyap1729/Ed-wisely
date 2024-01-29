@@ -3,144 +3,170 @@ import {
   Typography,
   Stack,
   Box,
-  AccordionDetails,
-  AccordionSummary,
-  Accordion,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material'
 import Red from '../assets/Red'
 import Blue from '../assets/Blue'
-import { useState } from 'react'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {
   Bar,
   BarChart,
   CartesianGrid,
   XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts'
 
-const CustomizedLabel = ({ x, y, value }) => (
-  <text x={x} y={y} dy={-10} fill="red" textAnchor="middle">
-    {value}
-  </text>
-)
-const data = [
-  {
-    name: 'T1',
-    value: 38,
-  },
-  {
-    name: 'T2',
-    value: 55,
-  },
-  {
-    name: 'T3',
-    value: 0,
-  },
-  {
-    name: 'T4',
-    value: 73,
-  },
-  {
-    name: 'T5',
-    value: 61,
-  },
-  {
-    name: 'T6',
-    value: 0,
-  },
-  {
-    name: 'T7',
-    value: 94,
-  },
-  {
-    name: 'T8',
-    value: 29,
-  },
-  {
-    name: 'T9',
-    value: 59,
-  },
-  {
-    name: 'T10',
-    value: 0,
-  },
-  {
-    name: 'T11',
-    value: 81,
-  },
-  {
-    name: 'T12',
-    value: 67,
-  },
-]
+const CustomizedLabel = ({ x, y, value }) => {
+  const col = value === 0 ? '#F44336' : '#0B58F5'
+  const fontSize = 14
+  const barWidth = 60
+  const textWidth = value.toString().length * fontSize
 
-export default function TinyBarChart() {
-  const [expanded, setExpanded] = useState(false)
-
-  const handleExpansion = () => {
-    setExpanded((prevExpanded) => !prevExpanded)
-  }
   return (
-    <Box
+    <Typography
+      component="text"
+      x={x + (barWidth - textWidth) / 2}
+      y={y}
+      dy={-10}
+      fill={col}
+      textAnchor="middle"
       sx={{
-        width: '67vw',
+        fontSize: '14px',
+        fontStyle: 'normal',
+        fontWeight: 500,
+        lineHeight: 'normal',
+        letterSpacing: '0.5px',
       }}
     >
-      <Stack direction={'row'} justifyContent={'space-between'}>
-        <Typography>Recent Assessments</Typography>
-        <Stack direction={'row'} spacing={'18px'}>
+      {value}%
+    </Typography>
+  )
+}
+
+export default function Bargraph(analysis) {
+  const obj = { ...analysis }
+  // console.log('bar graph ', obj.analysis)
+  const data = obj.analysis
+  const [subject, setSubject] = React.useState('')
+
+  const handleChange = (event) => {
+    setSubject(event.target.value)
+  }
+  return (
+    <Box>
+      <Stack
+        direction={'row'}
+        justifyContent={'space-between'}
+        alignItems={'center'}
+      >
+        <Typography
+          sx={{
+            color: '#161C24',
+            fontSize: '20px',
+            fontStyle: 'normal',
+            fontWeight: 500,
+            lineHeight: '28px',
+          }}
+        >
+          Recent Assessments
+        </Typography>
+        <Stack direction={'row'} spacing={'18px'} alignItems={'center'}>
           <Stack direction={'row'} spacing={'5px'}>
             <Box>
               <Red />
             </Box>
-            <Typography>Attempted</Typography>
+            <Typography
+              sx={{
+                color: '#161C24',
+                fontSize: '14px',
+                fontStyle: 'normal',
+                fontWeight: 400,
+                lineHeight: '24px',
+              }}
+            >
+              Attempted
+            </Typography>
           </Stack>
           <Stack direction={'row'} spacing={'5px'}>
             <Box>
               <Blue />
             </Box>
-            <Typography>Unattempted</Typography>
-          </Stack>
-          <Accordion
-            expanded={expanded}
-            onChange={handleExpansion}
-            sx={{
-              '& .MuiAccordion-region': { height: expanded ? 'auto' : 0 },
-              '& .MuiAccordionDetails-root': {
-                display: expanded ? 'block' : 'none',
-              },
-            }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1-content"
-              id="panel1-header"
+            <Typography
+              sx={{
+                color: '#161C24',
+                fontSize: '14px',
+                fontStyle: 'normal',
+                fontWeight: 400,
+                lineHeight: '24px',
+              }}
             >
-              <Typography>Subjects</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>Euler and Hamilton Paths</Typography>
-            </AccordionDetails>
-          </Accordion>
+              Unattempted
+            </Typography>
+          </Stack>
+          <FormControl fullWidth sx={{ width: '150px' }}>
+            <InputLabel id="demo-simple-select-label">Subjects</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={subject}
+              label="Subjects"
+              onChange={handleChange}
+            >
+              <MenuItem value={1}>Subject 01</MenuItem>
+              <MenuItem value={2}>Subject 02</MenuItem>
+              <MenuItem value={3}>Subject 03</MenuItem>
+            </Select>
+          </FormControl>
         </Stack>
       </Stack>
-      <Typography>Avg. performance</Typography>
-      <ResponsiveContainer width="100%" height={300}>
+      <Typography
+        sx={{
+          color: '#637381',
+          fontSize: '14px',
+          fontStyle: 'normal',
+          fontWeight: 500,
+          lineHeight: '28px',
+        }}
+      >
+        Avg. performance
+      </Typography>
+      <ResponsiveContainer width={'100%'} height={300}>
         <BarChart
           data={data}
           margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="value" fill="#0B58F5" label={<CustomizedLabel />} />
+          <CartesianGrid horizontal={true} vertical={false} />
+          <XAxis
+            dataKey="name"
+            sx={{
+              color: '#637381',
+              fontSize: '16px',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              lineHeight: '20px',
+            }}
+          />
+          <Bar
+            dataKey="percentage"
+            fill="#0B58F5"
+            // label={<CustomizedLabel />}
+            label={<CustomizedLabel />}
+            barSize={30}
+          />
         </BarChart>
+        <Typography
+          sx={{
+            color: '#637381',
+            fontSize: '14px',
+            fontStyle: 'normal',
+            fontWeight: 400,
+            margin: '0 50% 0 50%',
+          }}
+        >
+          Tests
+        </Typography>
       </ResponsiveContainer>
     </Box>
   )

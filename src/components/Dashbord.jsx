@@ -1,23 +1,22 @@
-import { Box, Grid, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import DashBordCards from './DashBordCards'
 import UserProfile from './UserProfile'
 import Calander from './Calander'
 import CourseCards from './CourseCards'
 import useFetchData from '../CustomHooks'
 import LeaderBoardCard from '../components/LeaderBoardCard'
-import LeaderRanking from './LeaderRanking'
+import Bargraph from '../components/Bargraph'
+import MuiCustomTable from '../components/MuiCustomTable'
+import CommonLayout from './CommonLayout'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { login, logout } from './authSlice'
+import PdfViewer from './PdfViewer'
+import './Dashbord.css'
 const Dashbord = () => {
-  const items = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-    'Item 6',
-    'Item 7',
-    'Item 8',
-    'Item 9',
-  ]
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   const fetchDataFromApi = async () => {
     try {
       const response = await fetch(
@@ -34,75 +33,111 @@ const Dashbord = () => {
   }
   const { assessmentsData, error, isLoading, setAssessmentsData } =
     useFetchData(fetchDataFromApi)
-  const { name, email, profile_picture, analytics, courses } = {
+  const {
+    name,
+    email,
+    profile_picture,
+    analytics,
+    recent_assessments,
+    leaderboard,
+    courses,
+  } = {
     ...assessmentsData,
   }
+  const { analysis, title, xtitle, ytitle } = { ...recent_assessments }
   const { attendance, avg_performance, assessment, assignment, coding } = {
     ...analytics,
   }
   const coursesData = Object.values({ ...courses })
 
-  // console.log(assessmentsData)
   const colors = ['#0B58F5', '#D89932', '#4ECD56', '#D89932']
   const bgcolors = ['#E7EEFE', '#FFF0D8', '#EDFAEE', '#FFF0D8']
-  // console.log(coursesData)
+  if (isLoading) {
+    return <p>Loading...</p>
+  }
 
-  return (
-    <Box padding={2}>
-      <DashBordCards analytics={analytics} />
-      <Typography
-        sx={{
-          color: '#212B36',
-          fontSize: '20px',
-          fontStyle: 'normal',
-          fontWeight: 500,
-          lineHeight: '28px',
-          marginBottom: '8px',
-        }}
-      >
-        User profile
-      </Typography>
-      <UserProfile name={name} email={email} imgUrl={profile_picture} />
-      <Typography
-        sx={{
-          color: 'var(--Basic-700, #2E3A59)',
-          fontSize: '20px',
-          fontStyle: 'normal',
-          fontWeight: 500,
-          lineHeight: '28px',
-          marginTop: '30px',
-        }}
-      >
-        Calendar
-      </Typography>
-      <Calander />
-      <LeaderBoardCard />
+  if (error) {
+    return <p>Error: {error.message}</p>
+  }
+  if (!isLoggedIn) {
+    return <p>please login</p>
+  }
+  if (isLoggedIn) {
+    return (
+      <CommonLayout>
+        <Box
+          sx={{
+            width: '100%',
+          }}
+        >
+          <DashBordCards analytics={analytics} />
+          <Stack direction={'row'} marginTop={'30px'} spacing={2}>
+            <Stack
+              justifyContent={'space-between'}
+              sx={{ maxWidth: '897px', width: '100%', minWidth: '600px' }}
+            >
+              <Box
+                sx={{
+                  borderRadius: '10px',
+                  border: '1px solid #F4F6F8',
+                  background: '#FFF',
+                  boxShadow: '10px 10px 32px 0px rgba(22, 22, 22, 0.04)',
+                }}
+              >
+                <Bargraph analysis={analysis} />
+              </Box>
+              <Box
+                sx={{
+                  borderRadius: '10px',
+                  border: '1px solid #F4F6F8',
+                  background: '#FFF',
+                  boxShadow: '10px 10px 32px 0px rgba(22, 22, 22, 0.04)',
+                }}
+              >
+                <MuiCustomTable />
+              </Box>
+            </Stack>
+            <Stack
+              spacing={'20px'}
+              sx={{ maxWidth: '319px', width: '100%', minWidth: '100px' }}
+            >
+              <UserProfile name={name} email={email} imgUrl={profile_picture} />
+              <Calander />
 
-      <Typography
-        sx={{
-          color: 'var(--Basic-700, #2E3A59)',
-          fontSize: '20px',
-          fontStyle: 'normal',
-          fontWeight: 500,
-          lineHeight: '28px',
-          my: '15px',
-        }}
-      >
-        Your courses
-      </Typography>
-      <Stack direction={'row'} spacing={2}>
-        {coursesData.map((course) => (
-          <CourseCards
-            key={course.id}
-            chipname={course.tag}
-            name={course.name}
-            imgUrl={course.image}
-            color={colors[course.id - 1]}
-            bgcolor={bgcolors[course.id - 1]}
-          />
-        ))}
-      </Stack>
-    </Box>
-  )
+              <LeaderBoardCard leaderboard={leaderboard} />
+            </Stack>
+          </Stack>
+
+          <Typography
+            sx={{
+              color: 'var(--Basic-700, #2E3A59)',
+              fontSize: '20px',
+              fontStyle: 'normal',
+              fontWeight: 500,
+              lineHeight: '28px',
+              my: '15px',
+            }}
+          >
+            Your courses
+          </Typography>
+          <Stack direction={'row'} spacing={2}>
+            {coursesData.map((course, index) => (
+              <Link to={`/course/${index + 1}`} className="custom-link">
+                <CourseCards
+                  key={course.id}
+                  chipname={course.tag}
+                  name={course.name}
+                  imgUrl={course.image}
+                  color={colors[course.id - 1]}
+                  bgcolor={bgcolors[course.id - 1]}
+                />
+              </Link>
+            ))}
+          </Stack>
+          {/* <PdfViewer pdfUrl={pdfUrl} /> */}
+        </Box>
+      </CommonLayout>
+    )
+  }
 }
 export default Dashbord

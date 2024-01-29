@@ -1,15 +1,27 @@
 import { Avatar, Box, Stack, Typography, Badge } from '@mui/material'
 import React from 'react'
 
-const LeaderRanking = ({ data, index, value, rank, col, fontcol }) => {
+const LeaderRanking = ({ data, index, value, rank, col, fontcol, bgcol }) => {
   return (
     <Stack
       direction={'row'}
       alignItems={'center'}
       justifyContent={'space-between'}
+      bgcolor={bgcol}
+      borderRadius={'5px'}
     >
-      <Stack direction={'row'} alignItems={'center'} gap={'27px'}>
-        <Stack direction={'row'} alignItems={'center'} gap={'16px'}>
+      <Stack
+        direction={'row'}
+        alignItems={'center'}
+        // gap={'27px'}
+        height={'65px'}
+      >
+        <Stack
+          direction={'row'}
+          alignItems={'center'}
+          gap={'16px'}
+          padding={'8px'}
+        >
           <Avatar
             alt="Avatar"
             sx={{ width: 30, height: 30 }}
@@ -51,6 +63,7 @@ const LeaderRanking = ({ data, index, value, rank, col, fontcol }) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            marginRight: '19px',
           }}
         >
           <Typography

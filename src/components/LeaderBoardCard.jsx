@@ -1,110 +1,20 @@
 import { useState } from 'react'
-
 import CustomCard from './CustomCard'
-import { Skeleton, Stack, Typography, Drawer, IconButton } from '@mui/material'
+import {
+  Skeleton,
+  Stack,
+  Typography,
+  Drawer,
+  IconButton,
+  Box,
+} from '@mui/material'
 import LeaderRanking from './LeaderRanking'
 import LeaderBordButton from '../assets/LeaderBordButton'
+import Arrow from '../assets/Arrow'
+const LeaderBoardCard = ({ leaderboard, width = '100%', height = '100%' }) => {
+  const data = Object.values({ ...leaderboard })
+  console.log('data is', leaderboard)
 
-const LeaderBoardCard = ({ width = '100%', height = '100%' }) => {
-  // console.log(data, '--> LeaderBoardCard')
-  const data = [
-    {
-      id: 1234,
-      name: 'Maharram Hasanli',
-      percentage: 65.7,
-      profile_pic:
-        'https://edwisely-profile-v2.s3.amazonaws.com/profile/EDS3/158746378221920200421092750.jpg',
-      rank: 12,
-    },
-    {
-      id: 1235,
-      name: 'Virat Kohli',
-      percentage: 98,
-      profile_pic:
-        'https://s3.ap-south-1.amazonaws.com/frndzzy-assetsweb/assets/images/app/default.png',
-      rank: 1,
-    },
-    {
-      id: 1236,
-      name: 'Rohit Sharma',
-      percentage: 97.5,
-      profile_pic:
-        'https://s3.ap-south-1.amazonaws.com/frndzzy-assetsweb/assets/images/app/default.png',
-      rank: 2,
-    },
-    {
-      id: 1237,
-      name: 'MS Dhoni',
-      percentage: 95.8,
-      profile_pic:
-        'https://s3.ap-south-1.amazonaws.com/frndzzy-assetsweb/assets/images/app/default.png',
-      rank: 3,
-    },
-    {
-      id: 1238,
-      name: 'Rahul Dravid',
-      percentage: 94.2,
-      profile_pic:
-        'https://s3.ap-south-1.amazonaws.com/frndzzy-assetsweb/assets/images/app/default.png',
-      rank: 4,
-    },
-    {
-      id: 1239,
-      name: 'Sachin Tendulkar',
-      percentage: 93.6,
-      profile_pic:
-        'https://s3.ap-south-1.amazonaws.com/frndzzy-assetsweb/assets/images/app/default.png',
-      rank: 5,
-    },
-    {
-      id: 1240,
-      name: 'Kapil Dev',
-      percentage: 91.5,
-      profile_pic:
-        'https://s3.ap-south-1.amazonaws.com/frndzzy-assetsweb/assets/images/app/default.png',
-      rank: 6,
-    },
-    {
-      id: 1241,
-      name: 'Sourav Ganguly',
-      percentage: 90,
-      profile_pic:
-        'https://s3.ap-south-1.amazonaws.com/frndzzy-assetsweb/assets/images/app/default.png',
-      rank: 7,
-    },
-    {
-      id: 1242,
-      name: 'AB De Villiers',
-      percentage: 89.2,
-      profile_pic:
-        'https://s3.ap-south-1.amazonaws.com/frndzzy-assetsweb/assets/images/app/default.png',
-      rank: 8,
-    },
-    {
-      id: 1243,
-      name: 'David Warner',
-      percentage: 87.6,
-      profile_pic:
-        'https://s3.ap-south-1.amazonaws.com/frndzzy-assetsweb/assets/images/app/default.png',
-      rank: 9,
-    },
-    {
-      id: 1244,
-      name: 'Chris Gayle',
-      percentage: 79,
-      profile_pic:
-        'https://s3.ap-south-1.amazonaws.com/frndzzy-assetsweb/assets/images/app/default.png',
-      rank: 10,
-    },
-    {
-      id: 1245,
-      name: 'Yuvraj Singh',
-      percentage: 71.1,
-      profile_pic:
-        'https://s3.ap-south-1.amazonaws.com/frndzzy-assetsweb/assets/images/app/default.png',
-      rank: 11,
-    },
-  ]
   const sortedData = data.sort((a, b) => b.percentage - a.percentage)
   const rankedData = sortedData.map((data, index) => ({
     ...data,
@@ -116,6 +26,7 @@ const LeaderBoardCard = ({ width = '100%', height = '100%' }) => {
     setOpen(!open)
   }
   const loggedInUserId = 1234
+
   const userIndex = rankedData.findIndex((item) => item.id === loggedInUserId)
 
   if (userIndex !== -1) {
@@ -123,7 +34,14 @@ const LeaderBoardCard = ({ width = '100%', height = '100%' }) => {
     rankedData.unshift(user)
   }
   return (
-    <>
+    <Box
+      onClick={handleToggleDrawer}
+      sx={{
+        '&:hover': {
+          cursor: 'pointer',
+        },
+      }}
+    >
       <Stack
         direction={'row'}
         justifyContent={'space-between'}
@@ -145,24 +63,67 @@ const LeaderBoardCard = ({ width = '100%', height = '100%' }) => {
           <LeaderBordButton />
         </IconButton>
       </Stack>
-      <Stack gap={'22px'}>
-        {rankedData.slice(0, 6).map((item, index) => (
-          <LeaderRanking
-            key={index + 1}
-            data={item}
-            value={item.percentage}
-            index={index + 1}
-            rank={item.rank}
-            col={item.rank < 4 ? '#EDFAEE ' : '#E7EEFE'}
-            fontcol={item.rank < 4 ? '#40A846 ' : '#0B58F5'}
-          />
-        ))}
-      </Stack>
-      <Drawer anchor="right" open={open} onClose={handleToggleDrawer}>
-        <CustomCard width={width} height={height}>
-          <Stack gap={'16px'}>
+      <Box
+        sx={{
+          borderRadius: '10px',
+          border: '1px solid #F4F6F8',
+          background: '#FFF',
+          boxShadow: '10px 10px 32px 0px rgba(22, 22, 22, 0.04)',
+          padding: '10px',
+        }}
+      >
+        <Stack>
+          {rankedData.slice(0, 6).map((item, index) => (
+            <LeaderRanking
+              key={index + 1}
+              data={item}
+              value={item.percentage}
+              index={index + 1}
+              rank={item.rank}
+              col={item.rank < 4 ? '#EDFAEE ' : '#E7EEFE'}
+              fontcol={item.rank < 4 ? '#40A846 ' : '#0B58F5'}
+              bgcol={index == 0 ? '#F4F6F8' : '#FFFF'}
+            />
+          ))}
+        </Stack>
+      </Box>
+      <Drawer
+        anchor="right"
+        open={open}
+        onClose={handleToggleDrawer}
+        PaperProps={{
+          style: {
+            maxWidth: '364px',
+            width: '100%',
+          },
+        }}
+        sx={{
+          '&:hover': {
+            cursor: 'pointer',
+          },
+        }}
+      >
+        <Stack direction={'row'} spacing={'10px'} alignItems={'center'}>
+          <IconButton onClick={handleToggleDrawer}>
+            <Arrow />
+          </IconButton>
+          <Typography
+            variant="h6"
+            sx={{
+              color: 'var(--Basic-700, #2E3A59)',
+              fontSize: '20px',
+              fontStyle: 'normal',
+              fontWeight: 500,
+              lineHeight: '28px',
+            }}
+          >
+            Leaderboard
+          </Typography>
+        </Stack>
+        <CustomCard width={width} height={height} bgcol={'#F4F6F8'}>
+          <Stack>
             {rankedData ? (
-              <Stack gap={'22px'}>
+              <Stack>
                 {rankedData?.map((item, index) => (
                   <LeaderRanking
                     key={index + 1}
@@ -172,6 +133,7 @@ const LeaderBoardCard = ({ width = '100%', height = '100%' }) => {
                     rank={item.rank}
                     col={item.rank < 4 ? '#EDFAEE ' : '#E7EEFE'}
                     fontcol={item.rank < 4 ? '#40A846 ' : '#0B58F5'}
+                    bgcol={index == 0 ? '#F4F6F8' : '#FFFF'}
                   />
                 ))}
               </Stack>
@@ -181,7 +143,7 @@ const LeaderBoardCard = ({ width = '100%', height = '100%' }) => {
           </Stack>
         </CustomCard>
       </Drawer>
-    </>
+    </Box>
   )
 }
 
