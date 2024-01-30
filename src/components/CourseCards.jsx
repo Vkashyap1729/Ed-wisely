@@ -10,6 +10,9 @@ const CourseCards = ({ chipname, name, color, bgcolor, imgUrl }) => {
         border: '1px solid #F4F6F8',
         background: '#FFF',
         boxShadow: '10px 10px 32px 0px rgba(22, 22, 22, 0.04)',
+        ':hover': {
+          cursor: 'pointer',
+        },
       }}
     >
       <Box

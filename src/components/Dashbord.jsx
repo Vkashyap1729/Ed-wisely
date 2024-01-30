@@ -14,7 +14,6 @@ import { login, logout } from './authSlice'
 import PdfViewer from './PdfViewer'
 import './Dashbord.css'
 const Dashbord = () => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   const fetchDataFromApi = async () => {
@@ -52,6 +51,13 @@ const Dashbord = () => {
 
   const colors = ['#0B58F5', '#D89932', '#4ECD56', '#D89932']
   const bgcolors = ['#E7EEFE', '#FFF0D8', '#EDFAEE', '#FFF0D8']
+
+  const navigate = useNavigate()
+  const handleCardClick = (index) => {
+    // Manually navigate to the desired URL
+    navigate(`/course/${index + 1}`)
+  }
+
   if (isLoading) {
     return <p>Loading...</p>
   }
@@ -120,9 +126,17 @@ const Dashbord = () => {
           >
             Your courses
           </Typography>
-          <Stack direction={'row'} spacing={2}>
+          <Stack
+            direction={'row'}
+            spacing={2}
+            sx={{
+              ':hover': {
+                cursor: 'pointer',
+              },
+            }}
+          >
             {coursesData.map((course, index) => (
-              <Link to={`/course/${index + 1}`} className="custom-link">
+              <div onClick={() => handleCardClick(index)}>
                 <CourseCards
                   key={course.id}
                   chipname={course.tag}
@@ -131,10 +145,9 @@ const Dashbord = () => {
                   color={colors[course.id - 1]}
                   bgcolor={bgcolors[course.id - 1]}
                 />
-              </Link>
+              </div>
             ))}
           </Stack>
-          {/* <PdfViewer pdfUrl={pdfUrl} /> */}
         </Box>
       </CommonLayout>
     )
