@@ -11,7 +11,6 @@ import CommonLayout from './CommonLayout'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login, logout } from './authSlice'
-import PdfViewer from './PdfViewer'
 import './Dashbord.css'
 const Dashbord = () => {
   const dispatch = useDispatch()
@@ -52,10 +51,6 @@ const Dashbord = () => {
   const colors = ['#0B58F5', '#D89932', '#4ECD56', '#D89932']
   const bgcolors = ['#E7EEFE', '#FFF0D8', '#EDFAEE', '#FFF0D8']
 
-  if (isLoading) {
-    return <p>Loading...</p>
-  }
-
   if (error) {
     return <p>Error: {error.message}</p>
   }
@@ -65,75 +60,74 @@ const Dashbord = () => {
   if (isLoggedIn) {
     return (
       <CommonLayout>
-        <Box
+        <DashBordCards analytics={analytics} isLoading={isLoading} />
+        <Stack
+          direction="row"
+          marginTop="30px"
+          justifyContent="space-between"
+          spacing={2}
+          // sx={{
+          //   '> div': {
+          //     flex: '1', // Make each direct child of Stack take remaining width
+          //     maxWidth: 'calc(100% - 319px)', // Limit the width to (100% - 319px)
+          //   },
+          // }}
+        >
+          <Stack justifyContent="space-between" width={'100%'}>
+            <Box
+              sx={{
+                borderRadius: '10px',
+                border: '1px solid #F4F6F8',
+                background: '#FFF',
+                boxShadow: '10px 10px 32px 0px rgba(22, 22, 22, 0.04)',
+              }}
+            >
+              <Bargraph analysis={analysis} />
+            </Box>
+            <Box
+              sx={{
+                borderRadius: '10px',
+                border: '1px solid #F4F6F8',
+                background: '#FFF',
+                boxShadow: '10px 10px 32px 0px rgba(22, 22, 22, 0.04)',
+              }}
+            >
+              <MuiCustomTable />
+            </Box>
+          </Stack>
+
+          <Stack spacing="20px" sx={{ width: '319px' }}>
+            <UserProfile name={name} email={email} imgUrl={profile_picture} />
+            <Calander />
+            <LeaderBoardCard leaderboard={leaderboard} />
+          </Stack>
+        </Stack>
+
+        <Typography
           sx={{
-            width: '100%',
+            color: 'var(--Basic-700, #2E3A59)',
+            fontSize: '20px',
+            fontStyle: 'normal',
+            fontWeight: 500,
+            lineHeight: '28px',
+            my: '15px',
           }}
         >
-          <DashBordCards analytics={analytics} />
-          <Stack direction={'row'} marginTop={'30px'} spacing={2}>
-            <Stack
-              justifyContent={'space-between'}
-              sx={{ maxWidth: '897px', width: '100%', minWidth: '600px' }}
-            >
-              <Box
-                sx={{
-                  borderRadius: '10px',
-                  border: '1px solid #F4F6F8',
-                  background: '#FFF',
-                  boxShadow: '10px 10px 32px 0px rgba(22, 22, 22, 0.04)',
-                }}
-              >
-                <Bargraph analysis={analysis} />
-              </Box>
-              <Box
-                sx={{
-                  borderRadius: '10px',
-                  border: '1px solid #F4F6F8',
-                  background: '#FFF',
-                  boxShadow: '10px 10px 32px 0px rgba(22, 22, 22, 0.04)',
-                }}
-              >
-                <MuiCustomTable />
-              </Box>
-            </Stack>
-            <Stack
-              spacing={'20px'}
-              sx={{ maxWidth: '319px', width: '100%', minWidth: '100px' }}
-            >
-              <UserProfile name={name} email={email} imgUrl={profile_picture} />
-              <Calander />
-
-              <LeaderBoardCard leaderboard={leaderboard} />
-            </Stack>
-          </Stack>
-
-          <Typography
-            sx={{
-              color: 'var(--Basic-700, #2E3A59)',
-              fontSize: '20px',
-              fontStyle: 'normal',
-              fontWeight: 500,
-              lineHeight: '28px',
-              my: '15px',
-            }}
-          >
-            Your courses
-          </Typography>
-          <Stack direction={'row'} spacing={2}>
-            {coursesData.map((course, index) => (
-              <CourseCards
-                key={course.id}
-                chipname={course.tag}
-                name={course.name}
-                imgUrl={course.image}
-                color={colors[course.id - 1]}
-                bgcolor={bgcolors[course.id - 1]}
-                index={index}
-              />
-            ))}
-          </Stack>
-        </Box>
+          Your courses
+        </Typography>
+        <Stack direction="row" justifyContent="space-between">
+          {coursesData.map((course, index) => (
+            <CourseCards
+              key={course.id}
+              chipname={course.tag}
+              name={course.name}
+              imgUrl={course.image}
+              color={colors[course.id - 1]}
+              bgcolor={bgcolors[course.id - 1]}
+              index={index}
+            />
+          ))}
+        </Stack>
       </CommonLayout>
     )
   }

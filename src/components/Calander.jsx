@@ -27,7 +27,7 @@ const Calander = () => {
         }}
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DateCalendar sx={{ width: '100%' }} />
+          <DateCalendar />
         </LocalizationProvider>
       </Box>
     </Box>

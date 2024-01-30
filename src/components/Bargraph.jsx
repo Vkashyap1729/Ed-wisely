@@ -55,7 +55,7 @@ export default function Bargraph(analysis) {
     setSubject(event.target.value)
   }
   return (
-    <Box>
+    <>
       <Stack
         direction={'row'}
         justifyContent={'space-between'}
@@ -168,6 +168,6 @@ export default function Bargraph(analysis) {
           Tests
         </Typography>
       </ResponsiveContainer>
-    </Box>
+    </>
   )
 }

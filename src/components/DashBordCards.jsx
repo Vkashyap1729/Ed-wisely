@@ -1,13 +1,60 @@
-import { Typography, Box, Stack } from '@mui/material'
+import { Typography, Box, Stack, Skeleton } from '@mui/material'
 import AssessmentDetailCard from './AssessmentDetailCard'
 import Asignment from '../assets/Asignment'
 import Coding from '../assets/Coding'
 import Assessments from '../assets/Assessments'
 import AvgPerformance from '../assets/AvgPerformance'
 import Attandance from '../assets/Attandance'
-const DashBordCards = ({ analytics }) => {
+const DashBordCards = ({ analytics, isLoading }) => {
   const { attendance, avg_performance, assessment, assignment, coding } = {
     ...analytics,
+  }
+
+  if (isLoading) {
+    return (
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        width={'100%'}
+      >
+        <Skeleton
+          variant="rounded"
+          sx={{
+            width: '150px',
+            height: '50px',
+          }}
+        ></Skeleton>
+        <Skeleton
+          variant="rounded"
+          sx={{
+            width: '150px',
+            height: '50px',
+          }}
+        ></Skeleton>
+        <Skeleton
+          variant="rounded"
+          sx={{
+            width: '150px',
+            height: '50px',
+          }}
+        ></Skeleton>
+        <Skeleton
+          variant="rounded"
+          sx={{
+            width: '150px',
+            height: '50px',
+          }}
+        ></Skeleton>
+        <Skeleton
+          variant="rounded"
+          sx={{
+            width: '150px',
+            height: '50px',
+          }}
+        ></Skeleton>
+      </Stack>
+    )
   }
   return (
     <Box
@@ -28,7 +75,7 @@ const DashBordCards = ({ analytics }) => {
       >
         Dashboard
       </Typography>
-      <Stack direction={'row'} spacing={'24px'}>
+      <Stack direction={'row'} justifyContent={'space-between'}>
         <AssessmentDetailCard
           icon={<Attandance />}
           iconBgColor="#E7EEFE"

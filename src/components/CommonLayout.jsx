@@ -5,47 +5,32 @@ import { Stack, Box } from '@mui/material'
 
 const CommonLayout = ({ children }) => {
   return (
-    <Stack direction={'row'}>
+    <Stack
+      direction={'row'}
+      sx={{
+        width: '100%',
+        maxWidth: '1500px',
+        // margin: '0 auto',
+      }}
+    >
       <Box
         sx={{
-          // minWidth: '60px',
-          width: '10%',
-          maxWidth: '80px',
-          height: '100%',
+          width: '80px',
+          height: '100vh',
           position: 'fixed',
-          // position: 'absolute',
-          left: 0,
         }}
       >
         <Navbar />
       </Box>
       <Stack
         sx={{
-          // minWidth: '820px',
-          width: '90%',
-          maxWidth: '1420px',
-          position: 'relative',
-          left: '80px',
+          flex: 1,
+          marginLeft: '80px',
+          // padding: '16px',
         }}
       >
-        <Box
-          sx={{
-            width: '100%',
-            minHeight: '60px',
-            maxHeight: '80px',
-          }}
-        >
-          <MainHeader />
-        </Box>
-        <Box
-          sx={{
-            // minWidth: '820px',
-            width: '100%',
-            // maxWidth: '1420px',
-          }}
-        >
-          {children}
-        </Box>
+        <MainHeader />
+        {children}
       </Stack>
     </Stack>
   )

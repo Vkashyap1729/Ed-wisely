@@ -9,7 +9,7 @@ const MainHeader = ({ name = 'Maharram' }) => {
         sx={{
           justifyContent: 'space-between',
           alignItems: 'center',
-          width: '90%',
+          width: '100%',
           height: '80px',
           borderBottom: '1px solid #DFE3E8',
         }}
