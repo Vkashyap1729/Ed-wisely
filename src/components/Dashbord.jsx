@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography, Grid } from '@mui/material'
 import DashBordCards from './DashBordCards'
 import UserProfile from './UserProfile'
 import Calander from './Calander'
@@ -62,18 +62,18 @@ const Dashbord = () => {
       <CommonLayout>
         <DashBordCards analytics={analytics} isLoading={isLoading} />
         <Stack
-          direction="row"
-          marginTop="30px"
-          justifyContent="space-between"
-          spacing={2}
-          // sx={{
-          //   '> div': {
-          //     flex: '1', // Make each direct child of Stack take remaining width
-          //     maxWidth: 'calc(100% - 319px)', // Limit the width to (100% - 319px)
-          //   },
-          // }}
+          direction={'row'}
+          alignItems={'center'}
+          justifyContent={'space-between'}
+          spacing={'22px'}
         >
-          <Stack justifyContent="space-between" width={'100%'}>
+          <Stack
+            // justifyContent="space-between"
+            // alignContent="center"
+            // alignItems={'center'}
+            spacing={'21px'}
+            width={'100%'}
+          >
             <Box
               sx={{
                 borderRadius: '10px',
