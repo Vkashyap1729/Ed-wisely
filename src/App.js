@@ -3,6 +3,7 @@ import Dashbord from './components/Dashbord'
 import CoursesPage from './components/CoursesPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import PdfViewer from './components/PdfViewer'
+import './App.css'
 const App = () => {
   return (
     <Router>

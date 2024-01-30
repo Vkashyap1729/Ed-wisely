@@ -1,79 +1,79 @@
 import React, { useState } from 'react'
-import { Stack, Box } from '@mui/material'
+import { Stack, Box, Typography } from '@mui/material'
 import { Worker, Viewer } from '@react-pdf-viewer/core'
-import '@react-pdf-viewer/core/lib/styles/index.css'
 import { useParams } from 'react-router'
-import { zoomPlugin } from '@react-pdf-viewer/zoom'
-import {
-  fullScreenPlugin,
-  RenderEnterFullScreenProps,
-} from '@react-pdf-viewer/full-screen'
-import {
-  pageNavigationPlugin,
-  DownArrowIcon,
-  NextIcon,
-  PreviousIcon,
-  UpArrowIcon,
-} from '@react-pdf-viewer/page-navigation'
-import { Button } from '@mui/material'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import Plus from '../assets/Plus'
+import ExpandPdf from '../assets/ExpandPdf'
+import Minus from '../assets/Minus'
+import Rotatepdf from '../assets/Rotatepdf'
 import CommonLayout from './CommonLayout'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { login, logout } from './authSlice'
 const PdfViewer = () => {
+  const dispatch = useDispatch()
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   const { url } = useParams()
   const pdfUrl = decodeURIComponent(url)
-  console.log(url)
-  const zoomPluginInstance = zoomPlugin()
-  const { ZoomInButton, ZoomOutButton, ZoomPopover } = zoomPluginInstance
-  const fullScreenPluginInstance = fullScreenPlugin()
-  const { EnterFullScreen } = fullScreenPluginInstance
-  const pageNavigationPluginInstance = pageNavigationPlugin()
+  if (!isLoggedIn) {
+    return <p>please login</p>
+  }
 
   return (
     <CommonLayout>
-      <Stack
-        direction={'row'}
-        alignItems={'center'}
-        justifyContent={'space-evenly'}
-      >
-        <Button>
-          {(props: GoToNextPage) => <NextIcon onClick={props.onClick} />}
-          Next page
-        </Button>
-        <ZoomOutButton />
-        <ZoomPopover />
-        <ZoomInButton />
-        <EnterFullScreen>
-          {(props: RenderEnterFullScreenProps) => (
-            <button
-              style={{
-                backgroundColor: '#357edd',
-                border: 'none',
-                borderRadius: '4px',
-                color: '#ffffff',
-                cursor: 'pointer',
-                padding: '8px',
-              }}
-              onClick={props.onClick}
-            >
-              Enter fullscreen
-            </button>
-          )}
-        </EnterFullScreen>
-      </Stack>
-      <Box height={'100%'}>
-        <Worker
-          workerUrl={`https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js`}
+      <Stack spacing={1}>
+        <Stack
+          direction={'row'}
+          sx={{
+            maxWidth: '1285px',
+            padding: '16px',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: '99px',
+            maxHeight: '24px',
+          }}
         >
-          <Viewer
-            fileUrl={pdfUrl}
-            plugins={
-              ([zoomPluginInstance],
-              [fullScreenPluginInstance],
-              [pageNavigationPluginInstance])
-            }
-          />
-        </Worker>
-      </Box>
+          <Stack direction={'row'} spacing={2}>
+            <ArrowBackIcon />
+            <Typography>File name</Typography>
+          </Stack>
+          <Stack direction={'row'} spacing={2}>
+            <Typography>pagination</Typography>
+            <Stack
+              direction={'row'}
+              spacing={3}
+              sx={{
+                borderLeft: '1px solid #BDBDC7',
+                borderRight: '1px solid #BDBDC7',
+                paddingLeft: 2,
+                paddingRight: 2,
+              }}
+            >
+              <Minus />
+              <Typography>zoom value</Typography>
+              <Plus />
+            </Stack>
+            <Stack direction={'row'} spacing={3}>
+              <ExpandPdf />
+              <Rotatepdf />
+            </Stack>
+          </Stack>
+          <Box></Box>
+        </Stack>
+        <Box
+          sx={{
+            minWidth: '415.511px',
+            height: '588px',
+            flexShrink: 0,
+          }}
+        >
+          <Worker
+            workerUrl={`https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js`}
+          >
+            <Viewer fileUrl={pdfUrl} />
+          </Worker>
+        </Box>
+      </Stack>
     </CommonLayout>
   )
 }
