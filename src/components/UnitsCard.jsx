@@ -35,7 +35,8 @@ const UnitsCard = (props) => {
           <Stack
             alignItems={'center'}
             sx={{
-              width: '30px',
+              // width: '30px',
+              // height: '30px',
               borderRadius: '5px',
               background: '#DFE3E8',
               padding: '15px',
