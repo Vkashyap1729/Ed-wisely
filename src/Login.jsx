@@ -22,20 +22,10 @@ const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-  useEffect(() => {
-    const storedUsername = localStorage.getItem('rememberMeUsername')
-    const storedPassword = localStorage.getItem('rememberMePassword')
 
-    if (storedUsername && storedPassword) {
-      setUsername(storedUsername)
-      setPassword(storedPassword)
-      setRememberMe(true)
-    }
-  }, [])
   const handleLogin = () => {
     const validUsername = 'demo'
     const validPassword = 'demo'
@@ -47,33 +37,19 @@ const Login = () => {
       alert('Invalid username or password')
     }
   }
-  const handleCheckboxChange = () => {
-    setRememberMe(!rememberMe)
-
-    if (!rememberMe) {
-      localStorage.setItem('rememberMeUsername', username)
-      localStorage.setItem('rememberMePassword', password)
-      localStorage.setItem('rememberMe', 'true')
-    } else {
-      localStorage.removeItem('rememberMeUsername')
-      localStorage.removeItem('rememberMePassword')
-      localStorage.removeItem('rememberMe')
-    }
-  }
 
   const handleTogglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword)
   }
 
   return (
-    <Stack direction={'row'}>
+    <Stack direction="row" spacing={0} sx={{ width: '100%', height: '100vh' }}>
       <Box
         sx={{
-          width: '50%',
-          height: '100%',
+          flex: '1',
+          position: 'relative',
           overflow: 'hidden',
         }}
-        position={'relative'}
       >
         <img
           src={LoginImg}
@@ -128,71 +104,80 @@ const Login = () => {
           Login to access your account
         </Typography>
       </Box>
-      <Stack
+      <Box
         sx={{
-          width: '381px',
+          flex: '1',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <Typography
+        <Stack
           sx={{
-            color: '#161C24',
-            fontSize: '48px',
-            fontStyle: 'normal',
-            fontWeight: 700,
-            lineHeight: 'normal',
+            maxWidth: '400px',
+            maxHeight: '300px',
           }}
         >
-          Login
-        </Typography>
-        <Typography
-          sx={{
-            color: '#161C24',
-            fontSize: '16px',
-            fontStyle: 'normal',
-            fontWeight: 500,
-            lineHeight: 'normal',
-            my: '12px',
-          }}
-        >
-          Enter your account details
-        </Typography>
-        <FormControl>
-          <InputLabel htmlFor="name"></InputLabel>
-          <Input
-            id="name"
-            placeholder="Username"
-            autoComplete="off"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-
-          <InputLabel htmlFor="password" />
-          <Input
-            type={showPassword ? 'text' : 'password'}
-            id="password"
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            autoComplete="off"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton onClick={handleTogglePasswordVisibility} edge="end">
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-
-          <FormControlLabel
-            control={
-              <Checkbox id="rememberMe" onChange={handleCheckboxChange} />
-            }
-            label="Remember Me"
-          />
-
-          <Button variant="contained" color="primary" onClick={handleLogin}>
+          <Typography
+            sx={{
+              color: '#161C24',
+              fontSize: '48px',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              lineHeight: 'normal',
+            }}
+          >
             Login
-          </Button>
-        </FormControl>
-      </Stack>
+          </Typography>
+          <Typography
+            sx={{
+              color: '#161C24',
+              fontSize: '16px',
+              fontStyle: 'normal',
+              fontWeight: 500,
+              lineHeight: 'normal',
+              my: '12px',
+            }}
+          >
+            Enter your account details
+          </Typography>
+          <FormControl>
+            <InputLabel htmlFor="name"></InputLabel>
+            <Input
+              id="name"
+              placeholder="Username"
+              autoComplete="off"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+
+            <InputLabel htmlFor="password" />
+            <Input
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              autoComplete="off"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={handleTogglePasswordVisibility}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            <FormControlLabel
+              control={<Checkbox id="rememberMe" />}
+              label="Remember Me"
+            />
+            <Button variant="contained" color="primary" onClick={handleLogin}>
+              Login
+            </Button>
+          </FormControl>
+        </Stack>
+      </Box>
     </Stack>
   )
 }
