@@ -25,17 +25,24 @@ const Login = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  const loginUser = async (username, password) => {
+    try {
+      const response = await fetch(
+        `https://stagingstudentpython.edwisely.com/reactProject/loginUser?username=${username}&password=${password}`
+      )
 
-  const handleLogin = () => {
-    const validUsername = 'demo'
-    const validPassword = 'demo'
-    console.log(password)
-    if (username === validUsername && password === validPassword) {
-      navigate('/dashbord')
-      dispatch(login())
-    } else {
-      alert('Invalid username or password')
+      if (response.ok) {
+        navigate('/dashbord')
+        dispatch(login())
+      } else {
+        alert('Invalid username or password')
+      }
+    } catch (error) {
+      console.error('Error during fetch:', error)
     }
+  }
+  const handleLogin = () => {
+    loginUser((username, password))
   }
 
   const handleTogglePasswordVisibility = () => {
