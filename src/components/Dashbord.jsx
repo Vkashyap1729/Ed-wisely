@@ -52,12 +52,6 @@ const Dashbord = () => {
   const colors = ['#0B58F5', '#D89932', '#4ECD56', '#D89932']
   const bgcolors = ['#E7EEFE', '#FFF0D8', '#EDFAEE', '#FFF0D8']
 
-  const navigate = useNavigate()
-  const handleCardClick = (index) => {
-    // Manually navigate to the desired URL
-    navigate(`/course/${index + 1}`)
-  }
-
   if (isLoading) {
     return <p>Loading...</p>
   }
@@ -126,26 +120,17 @@ const Dashbord = () => {
           >
             Your courses
           </Typography>
-          <Stack
-            direction={'row'}
-            spacing={2}
-            sx={{
-              ':hover': {
-                cursor: 'pointer',
-              },
-            }}
-          >
+          <Stack direction={'row'} spacing={2}>
             {coursesData.map((course, index) => (
-              <div onClick={() => handleCardClick(index)}>
-                <CourseCards
-                  key={course.id}
-                  chipname={course.tag}
-                  name={course.name}
-                  imgUrl={course.image}
-                  color={colors[course.id - 1]}
-                  bgcolor={bgcolors[course.id - 1]}
-                />
-              </div>
+              <CourseCards
+                key={course.id}
+                chipname={course.tag}
+                name={course.name}
+                imgUrl={course.image}
+                color={colors[course.id - 1]}
+                bgcolor={bgcolors[course.id - 1]}
+                index={index}
+              />
             ))}
           </Stack>
         </Box>

@@ -1,11 +1,18 @@
 import { Box, Typography } from '@mui/material'
-const CourseCards = ({ chipname, name, color, bgcolor, imgUrl }) => {
+import { useNavigate } from 'react-router'
+const CourseCards = ({ chipname, name, color, bgcolor, imgUrl, index }) => {
+  const navigate = useNavigate()
+  const handleCardClick = (index) => {
+    // Manually navigate to the desired URL
+    navigate(`/course/${index + 1}`)
+  }
   return (
     <Box
+      onClick={() => handleCardClick(index)}
       sx={{
         maxWidth: '244px',
-        width: '100%',
-        minWidth: '100px',
+        width: '25%',
+        minWidth: '200px',
         borderRadius: '10px',
         border: '1px solid #F4F6F8',
         background: '#FFF',
