@@ -6,19 +6,24 @@ import {
   MenuItem,
   MenuList,
   FormControlLabel,
+  Button,
 } from '@mui/material'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import Arrow from '../assets/Arrow'
 import UnitsCard from './UnitsCard'
 import Units from './Units'
-import { useState } from 'react'
 import ProgressBar from './ProgressBar'
 import useFetchData from '../CustomHooks'
 import CommonLayout from './CommonLayout'
 import { useParams } from 'react-router-dom'
-import { useEffect } from 'react'
 import { login, logout } from './authSlice'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 const CoursesPage = () => {
+  const navigate = useNavigate()
+  const handelBack = () => {
+    navigate('/dashbord')
+  }
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   const handleLogout = () => {
@@ -55,7 +60,17 @@ const CoursesPage = () => {
   }
 
   if (error) {
-    return <p>Error: {error.message}</p>
+    return (
+      <Box justifyContent={'center'} sx={{ display: 'flex' }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={window.location.reload()}
+        >
+          Try Again!
+        </Button>
+      </Box>
+    )
   }
   const continueReadingArray = continue_reading || []
   if (!isLoggedIn) {
@@ -73,7 +88,18 @@ const CoursesPage = () => {
             alignItems: 'center',
           }}
         >
-          <Arrow />
+          {/* <ArrowBackIcon onClick={handelBack} /> */}
+          <Box
+            onClick={handelBack}
+            sx={{
+              cursor: 'pointer',
+              ':hover': {
+                cursor: 'pointer',
+              },
+            }}
+          >
+            <Arrow />
+          </Box>
           <Typography
             sx={{
               color: '#161C24',

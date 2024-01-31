@@ -10,7 +10,11 @@ import Rotatepdf from '../assets/Rotatepdf'
 import CommonLayout from './CommonLayout'
 import { useDispatch, useSelector } from 'react-redux'
 import { login, logout } from './authSlice'
+
 const PdfViewer = () => {
+  const handleGoBack = () => {
+    window.history.back()
+  }
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   const { url } = useParams()
@@ -34,7 +38,7 @@ const PdfViewer = () => {
           }}
         >
           <Stack direction={'row'} spacing={2}>
-            <ArrowBackIcon />
+            <ArrowBackIcon onClick={handleGoBack} />
             <Typography>File name</Typography>
           </Stack>
           <Stack direction={'row'} spacing={2}>

@@ -18,6 +18,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 const Units = (props) => {
   const { units } = { ...props }
   console.log('units are', units)
+  // console.log('url', units.topics.url)
   const [idx, setIdx] = useState(0)
   const [clickedIndex, setClickedIndex] = useState(0)
   const [expanded, setExpanded] = useState(false)
@@ -40,6 +41,7 @@ const Units = (props) => {
   const handleTypographyClick = (index) => {
     setClickedIndex(index)
   }
+  const goToPdf = () => {}
 
   console.log(units[0].topics)
   return (
@@ -48,7 +50,6 @@ const Units = (props) => {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          // border: '2px solid black',
         }}
         my={2}
       >
@@ -141,7 +142,18 @@ const Units = (props) => {
                     {topic.topic_name}
                   </Typography>
                 </Stack>
-                <Stack alignItems={'center'} direction={'row'} spacing={'10px'}>
+                <Stack
+                  alignItems={'center'}
+                  direction={'row'}
+                  spacing={'10px'}
+                  sx={{
+                    cursor: 'pointer',
+                    ':hover': {
+                      cursor: 'pointer',
+                    },
+                  }}
+                  onClick={goToPdf}
+                >
                   <Typography
                     sx={{
                       color: '#0B58F5',

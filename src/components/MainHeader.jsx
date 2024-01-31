@@ -11,6 +11,8 @@ const MainHeader = ({ name = 'Maharram' }) => {
           alignItems: 'center',
           width: '100%',
           height: '80px',
+          paddingLeft: '25px',
+          paddingRight: '40px',
           borderBottom: '1px solid #DFE3E8',
         }}
       >

@@ -3,6 +3,7 @@ import Dashbord from './components/Dashbord'
 import CoursesPage from './components/CoursesPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import PdfViewer from './components/PdfViewer'
+import Testing from './components/Testing'
 import './App.css'
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Route exact path="/dashbord" element={<Dashbord />}></Route>
         <Route exact path="/course/:id" element={<CoursesPage />}></Route>
         <Route exact path="/pdfview/:url" element={<PdfViewer />}></Route>
+        <Route exact path="/testing" element={<Testing />}></Route>
       </Routes>
     </Router>
   )

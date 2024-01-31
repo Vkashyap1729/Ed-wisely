@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, Grid } from '@mui/material'
+import { Box, Stack, Typography, Grid, Button } from '@mui/material'
 import DashBordCards from './DashBordCards'
 import UserProfile from './UserProfile'
 import Calander from './Calander'
@@ -11,7 +11,9 @@ import CommonLayout from './CommonLayout'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login, logout } from './authSlice'
+import ErrorPage from './ErrorPage'
 import './Dashbord.css'
+import ReactErrorBoundary from './ReactErrorBoundary'
 const Dashbord = () => {
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
@@ -52,7 +54,18 @@ const Dashbord = () => {
   const bgcolors = ['#E7EEFE', '#FFF0D8', '#EDFAEE', '#FFF0D8']
 
   if (error) {
-    return <p>Error: {error.message}</p>
+    return (
+      // change to componet
+      <Box justifyContent={'center'} sx={{ display: 'flex' }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={window.location.reload()}
+        >
+          Try Again!
+        </Button>
+      </Box>
+    )
   }
   if (!isLoggedIn) {
     return <p>please login</p>
@@ -65,13 +78,12 @@ const Dashbord = () => {
           direction={'row'}
           alignItems={'center'}
           justifyContent={'space-between'}
-          spacing={'22px'}
         >
           <Stack
-            // justifyContent="space-between"
+            justifyContent="space-around"
             // alignContent="center"
             // alignItems={'center'}
-            spacing={'21px'}
+            spacing={'20px'}
             width={'100%'}
           >
             <Box
@@ -115,7 +127,7 @@ const Dashbord = () => {
         >
           Your courses
         </Typography>
-        <Stack direction="row" justifyContent="space-between">
+        <Stack direction="row" justifyContent={'space-around'}>
           {coursesData.map((course, index) => (
             <CourseCards
               key={course.id}

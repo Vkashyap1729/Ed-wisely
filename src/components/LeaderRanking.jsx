@@ -31,9 +31,13 @@ const LeaderRanking = ({ data, index, value, rank, col, fontcol, bgcol }) => {
             <Typography
               component={'p'}
               sx={{
-                fontFamily: 'Poppins-Medium',
-                fontSize: '14px',
-                color: (theme) => theme.palette.grey[900],
+                color: 'var(--Basic-700, #2E3A59)',
+                textLeadingTrim: 'both',
+                textEdge: 'cap',
+                fontSize: '16px',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                lineHeight: '24px', // Assuming 150% is equivalent to 24px
               }}
             >
               {data.name}
@@ -41,9 +45,11 @@ const LeaderRanking = ({ data, index, value, rank, col, fontcol, bgcol }) => {
             <Typography
               component={'p'}
               sx={{
-                fontFamily: 'Poppins-SemiBold',
-                fontSize: '14px',
-                color: (theme) => theme.palette.warning.main,
+                color: '#212B36',
+                fontSize: '12px',
+                fontStyle: 'normal',
+                fontWeight: 400,
+                lineHeight: 'normal',
               }}
             >
               {value}%

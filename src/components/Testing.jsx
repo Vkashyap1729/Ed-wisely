@@ -1,77 +1,50 @@
-import React, { useState } from 'react'
-import { DataGrid } from '@mui/x-data-grid'
+import Box from '@mui/material/Box'
+import Drawer from '@mui/material/Drawer'
+import CssBaseline from '@mui/material/CssBaseline'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Navbar from './Navbar'
+import MainHeader from './MainHeader'
 
-const Testing = () => {
-const data = 
-  const [filteredData, setFilteredData] = useState(data)
+const drawerWidth = 80
 
-  const columns = [
-    { field: 'subject', headerName: 'Subject', flex: 1, sortable: true },
-    { field: 'semester', headerName: 'Semester', flex: 1, sortable: true },
-    {
-      field: 'total_timespent',
-      headerName: 'Total Time Spent',
-      flex: 1,
-      sortable: true,
-    },
-    {
-      field: 'submission_type',
-      headerName: 'Submission Type',
-      flex: 1,
-      sortable: true,
-    },
-    {
-      field: 'internet_speed',
-      headerName: 'Internet Speed',
-      flex: 1,
-      sortable: true,
-    },
-    {
-      field: 'percentage_scored',
-      headerName: 'Percentage Scored',
-      flex: 1,
-      sortable: true,
-    },
-    { field: 'attempted', headerName: 'Attempted', flex: 1, sortable: true },
-  ]
-
-  const handleSortModelChange = (model) => {
-    // Handle sorting logic here
-    // You can use the model to sort the data
-    // Example: setFilteredData(sortedData);
-  }
-
-  const handleFilterChange = (event) => {
-    const semesterFilter = event.target.value
-    // Handle filtering logic here
-    // Example: const filteredData = data.filter(item => item.semester === parseInt(semesterFilter, 10));
-    // setFilteredData(filteredData);
-  }
-
+export default function PermanentDrawerLeft() {
   return (
-    <div>
-      <label>Filter by Semester: </label>
-      <select onChange={handleFilterChange}>
-        <option value="">All</option>
-        <option value="1">Semester 1</option>
-        <option value="2">Semester 2</option>
-        <option value="3">Semester 3</option>
-      </select>
-
-      <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={filteredData}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5, 10, 20]}
-          sortModel={[
-            { field: 'semester', sort: 'asc' }, // Default sorting by semester in ascending order
-          ]}
-          onSortModelChange={handleSortModelChange}
-        />
-      </div>
-    </div>
+    <Box sx={{ display: 'flex' }}>
+      {/* <CssBaseline /> */}
+      <AppBar
+        position="fixed"
+        sx={{
+          width: `calc(100% - ${drawerWidth}px)`,
+          ml: `${drawerWidth}px`,
+          bgcolor: '#FFF',
+        }}
+      >
+        <Toolbar>
+          <MainHeader />
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="permanent"
+        anchor="left"
+      >
+        <Navbar />
+      </Drawer>
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+      >
+        <Toolbar />
+        common layput
+      </Box>
+    </Box>
   )
 }
-
-export default Testing
