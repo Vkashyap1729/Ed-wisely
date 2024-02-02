@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Box, Stack, Typography, Grid, Button } from '@mui/material'
 import DashBordCards from './DashBordCards'
 import UserProfile from './UserProfile'
@@ -14,9 +15,19 @@ import { login, logout } from './authSlice'
 import ErrorPage from './ErrorPage'
 import './Dashbord.css'
 import ReactErrorBoundary from './ReactErrorBoundary'
+import { getAssessmentdata } from '../store/actions/dashboard.actions'
 const Dashbord = () => {
-  const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  const dispatch = useDispatch()
+  // const { tableData, loadingTableData, errorLoadingTableData } = useSelector(
+  //   (state) => state.dashboard
+  // )
+
+  // console.log(tableData, loadingTableData, errorLoadingTableData)
+
+  useEffect(() => {
+    dispatch(getAssessmentdata())
+  }, [])
   const fetchDataFromApi = async () => {
     try {
       const response = await fetch(
@@ -58,8 +69,8 @@ const Dashbord = () => {
       // change to componet
       <Box justifyContent={'center'} sx={{ display: 'flex' }}>
         <Button
-          variant="contained"
-          color="primary"
+          variant='contained'
+          color='primary'
           onClick={window.location.reload()}
         >
           Try Again!
@@ -80,7 +91,7 @@ const Dashbord = () => {
           justifyContent={'space-between'}
         >
           <Stack
-            justifyContent="space-around"
+            justifyContent='space-around'
             // alignContent="center"
             // alignItems={'center'}
             spacing={'20px'}
@@ -108,7 +119,7 @@ const Dashbord = () => {
             </Box>
           </Stack>
 
-          <Stack spacing="20px" sx={{ width: '319px' }}>
+          <Stack spacing='20px' sx={{ width: '319px' }}>
             <UserProfile name={name} email={email} imgUrl={profile_picture} />
             <Calander />
             <LeaderBoardCard leaderboard={leaderboard} />
@@ -127,7 +138,7 @@ const Dashbord = () => {
         >
           Your courses
         </Typography>
-        <Stack direction="row" justifyContent={'space-around'}>
+        <Stack direction='row' justifyContent={'space-around'}>
           {coursesData.map((course, index) => (
             <CourseCards
               key={course.id}
