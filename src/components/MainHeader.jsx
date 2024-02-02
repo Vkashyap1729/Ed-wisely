@@ -9,11 +9,12 @@ const MainHeader = ({ name = 'Maharram' }) => {
         sx={{
           justifyContent: 'space-between',
           alignItems: 'center',
-          width: '100%',
+          width: `100%`,
           height: '80px',
-          paddingLeft: '25px',
-          paddingRight: '40px',
+          position: 'absolute',
+          top: '0px',
           borderBottom: '1px solid #DFE3E8',
+          padding: '0px 0px 0px 90px',
         }}
       >
         <Typography
