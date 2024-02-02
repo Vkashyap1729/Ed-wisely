@@ -80,31 +80,32 @@ const CommonLayout = ({ children }) => {
     //     {children}
     //   </Stack>
     // </Stack>
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{
-          width: `calc(100% - ${drawerWidth}px)`,
-          ml: `${drawerWidth}px`,
-          bgcolor: '#FFF',
-        }}
-      >
-        <Toolbar>
-          <MainHeader />
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        sx={{
-          width: '80px',
-          height: '100%',
-          position: 'absolute',
-          left: '0px',
-          zIndex: 9999,
-        }}
-        variant="permanent"
-        anchor="left"
-      >
+    <Stack>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar
+          position='fixed'
+          sx={{
+            width: `calc(100% - ${drawerWidth}px)`,
+            ml: `${drawerWidth}px`,
+            bgcolor: '#FFF',
+          }}
+        >
+          <Toolbar>
+            <MainHeader />
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          sx={{
+            width: '80px',
+            height: '100%',
+            position: 'absolute',
+            left: '0px',
+            zIndex: 9999,
+          }}
+          variant='permanent'
+          anchor='left'
+        />
         <Navbar />
       </Box>
 
