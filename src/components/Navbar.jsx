@@ -17,12 +17,12 @@ const Navbar = () => {
     <Stack
       direction={'column'}
       justifyContent={'space-between'}
-      bgcolor="#F4F6F8"
-      height="100vh"
-      width={'100%'}
-      alignItems="center"
+      bgcolor='#F4F6F8'
+      height='100%'
+      width='100%'
+      alignItems='center'
     >
-      <Stack direction="column" alignItems="center" spacing={4}>
+      <Stack direction='column' alignItems='center' spacing={4}>
         <Logo />
         <Dashbord />
         <Book />
